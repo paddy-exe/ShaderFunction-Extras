@@ -11,6 +11,9 @@
   </a>
 </div>
 
+![ShaderFunctions-GitHub-Preview](https://user-images.githubusercontent.com/38077837/223874483-03c037d6-d27f-4e83-a5b1-2d4af3c991fb.png)
+
+
 This project aims to help Godot developers writing custom written shaders by providing high-level functions which are often used.
 
 ## :tada: Using the addon
