@@ -1,0 +1,36 @@
+name: Release
+
+on: [push]
+
+jobs:
+  build:
+    runs-on:  ubuntu-latest
+    name: Create Release
+
+    steps:
+
+      - name: Checkout project
+        uses: actions/checkout@v3
+
+      - name: Move License
+        shell: bash
+        run: |
+          mv LICENSE.md README.md ${{ github.workspace }}/addons/ShaderFunction-Extras
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: 'zip'
+          filename: 'ShaderFunction-Extras.zip'
+          path: '${{ github.workspace }}/addons/'
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+
+      - name: Create and upload asset
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: "ShaderFunction.zip"
+          omitNameDuringUpdate: true
+          omitBodyDuringUpdate: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
