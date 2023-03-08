@@ -24,6 +24,14 @@ jobs:
           path: |
             ${{ github.workspace }}/addons/ShaderFunction-Extras/*
 
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: 'zip'
+          filename: '${{ github.event.repository.name }}.zip'
+          path: '${{ github.workspace }}'
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+
       - name: Create and upload asset
         uses: ncipollo/release-action@v1
         with:
