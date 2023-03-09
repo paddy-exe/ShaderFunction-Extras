@@ -26,3 +26,66 @@ use specific functions, you can copy and paste it inside your shader code still.
 
 ## ℹ️ Contributing
 All these shader functions are based on publicly available shader functions (open-source licensed with permissive licenses such as MIT). If you want to contribute a function, create an issue starting with `Proposal: ...` describing the shader function and why you think it should be included in here. We can then discuss on how this function and its parameters should be called (for clarity of the users). After that you are open to create a PR (Pull Request) with the dicussed details of the proposal.
+
+## Provided Functions
+
+<details>
+  <summary>
+    Click me to enlarge
+  </summary>
+
+  ### Color
+  #### Blend Modes
+  * `blend_normal`
+  * `blend_dissolve`
+  * `blend_multiply`
+  * `blend_screen`
+  * `blend_overlay`
+  * `blend_hard_light`
+  * `blend_soft_light`
+  * `blend_burn`
+  * `blend_dodge`
+  * `blend_lighten`
+  * `blend_darken`
+  * `blend_difference`
+  * `blend_additive`
+  * `blend_addsub`
+  * `blend_linear_light`
+  * `blend_vivid_light`
+  * `blend_pin_light`
+  * `blend_hard_mix`
+  * `blend_exclusion`
+
+  #### Color Conversion
+  * `greyscale`
+  * `hsv_to_rgb`
+  * `rgb_to_hsv`
+
+  ### Noise
+  * `psrdnoise3_with_gradient`
+  * `psrdnoise3`
+  * `psrdnoise2_with_gradient`
+  * `psrdnoise2`
+
+  ### Utility
+  * `linear_scene_depth_*`
+  * `distance_fade`
+  * `proximity_fade_*`
+  * `random_range`
+  * `remap`
+
+  ### UV
+  * `uv_panning`
+  * `uv_scaling`
+  * `uv_polar_coord_*`
+  * `uv_flipbook`
+  * `uv_twirl`
+
+  ### Wave
+  * `sawtooth_wave`
+  * `sine_wave`
+  * `sine_wave_angular`
+  * `square_wave`
+  * `triangle_wave`
+  
+</details>
