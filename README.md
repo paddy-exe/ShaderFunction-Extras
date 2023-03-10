@@ -17,7 +17,7 @@
 This project aims to help Godot developers writing custom written shaders by providing high-level functions which are often used.
 
 ## :tada: Using the addon
-Download the source (releases and AssetLib version are still WIP) and put the `ShaderFunction-Extras` inside 
+Download the source (releases and AssetLib version are still WIP) and put the `ShaderFunction-Extras` inside
 your `addons` folder. If you don't have one, create it or put the whole addons folder inside your project directory.
 
 ## 🔢 Versioning
@@ -73,13 +73,17 @@ All these shader functions are based on publicly available shader functions (ope
   * `proximity_fade_*`
   * `random_range`
   * `remap`
+  * `fresnel`
+  * `fresnel_glow`
 
   ### UV
   * `uv_panning`
   * `uv_scaling`
+  * `uv_rotate`
   * `uv_polar_coord_*`
   * `uv_flipbook`
   * `uv_twirl`
+  * `uv_grid_tiler`
 
   ### Wave
   * `sawtooth_wave`
@@ -87,5 +91,14 @@ All these shader functions are based on publicly available shader functions (ope
   * `sine_wave_angular`
   * `square_wave`
   * `triangle_wave`
-  
+
+  ### Shapes
+  * `polygon`
+  * `circle`
+  * `square`
+  * `square_stroke`
+  * `square_rounded`
+  * `swirl`
+  * `line`
+
 </details>

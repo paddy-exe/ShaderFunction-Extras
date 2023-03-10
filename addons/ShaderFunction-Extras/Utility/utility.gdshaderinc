@@ -43,3 +43,11 @@ float remap(float value, float input_min, float input_max, float output_min, flo
 	float _output_range = output_max - output_min;
 	return output_min + _output_range * ((value - input_min) / _input_range);
 }
+
+float fresnel(float amount, vec3 normal, vec3 view) {
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+vec3 fresnel_glow(float amount, float intensity, vec3 color, vec3 normal, vec3 view) {
+	return pow((1.0 - dot(normalize(normal), normalize(view))), amount) * color * intensity;
+}
