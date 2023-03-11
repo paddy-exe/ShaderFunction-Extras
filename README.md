@@ -56,7 +56,7 @@ All these shader functions are based on publicly available shader functions (ope
   * `blend_hard_mix`
   * `blend_exclusion`
 
-  #### Color Conversion
+  #### Color Adjustment
   * `greyscale`
   * `hsv_to_rgb`
   * `rgb_to_hsv`

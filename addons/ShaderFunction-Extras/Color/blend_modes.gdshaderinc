@@ -4,8 +4,8 @@ vec3 blend_normal(vec3 c1, vec3 c2, float opacity) {
 	return opacity*c1 + (1.0-opacity)*c2;
 }
 
-vec3 blend_dissolve(vec2 uv, vec3 c1, vec3 c2, float opacity) {
-	if (random_range(vec3(uv, 1.0), 0.0, 1.0) < opacity) {
+vec3 blend_dissolve(vec3 seed, vec3 c1, vec3 c2, float opacity) {
+	if (random_range(vec3(seed), 0.0, 1.0) < opacity) {
 		return c1;
 	} else {
 		return c2;
@@ -16,7 +16,7 @@ vec3 blend_multiply(vec3 c1, vec3 c2, float opacity) {
 	return opacity*c1*c2 + (1.0-opacity)*c2;
 }
 
-vec3 blend_screen(vec2 uv, vec3 c1, vec3 c2, float opacity) {
+vec3 blend_screen(vec3 c1, vec3 c2, float opacity) {
 	return opacity*(1.0-(1.0-c1)*(1.0-c2)) + (1.0-opacity)*c2;
 }
 
@@ -88,7 +88,7 @@ float blend_vivid_light_f(float c1, float c2) {
 	return (c1 < 0.5) ? 1.0 - (1.0 - c2) / (2.0 * c1) : c2 / (2.0 * (1.0 - c1));
 }
 
-vec3 blend_vivid_light(vec2 uv, vec3 c1, vec3 c2, float opacity) {
+vec3 blend_vivid_light(vec3 c1, vec3 c2, float opacity) {
 	return opacity*vec3(blend_vivid_light_f(c1.x, c2.x), blend_vivid_light_f(c1.y, c2.y), blend_vivid_light_f(c1.z, c2.z)) + (1.0-opacity)*c2;
 }
 
@@ -96,7 +96,7 @@ float blend_pin_light_f( float c1, float c2) {
 	return (2.0 * c1 - 1.0 > c2) ? 2.0 * c1 - 1.0 : ((c1 < 0.5 * c2) ? 2.0 * c1 : c2);
 }
 
-vec3 blend_pin_light(vec2 uv, vec3 c1, vec3 c2, float opacity) {
+vec3 blend_pin_light(vec3 c1, vec3 c2, float opacity) {
 	return opacity*vec3(blend_pin_light_f(c1.x, c2.x), blend_pin_light_f(c1.y, c2.y), blend_pin_light_f(c1.z, c2.z)) + (1.0-opacity)*c2;
 }
 
