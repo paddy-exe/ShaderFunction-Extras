@@ -18,3 +18,16 @@ vec3 rgb_to_hsv(vec3 color) {
 	float e = 1.0e-10;
 	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
 }
+
+vec3 hsv_adjustment(vec3 col, float hue_offset, float sat_offset, float val_offset) {
+	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+	vec4 p = mix(vec4(col.bg, K.wz), vec4(col.gb, K.xy), step(col.b, col.g));
+	vec4 q = mix(vec4(p.xyw, col.r), vec4(col.r, p.yzx), step(p.x, col.r));
+	float d = q.x - min(q.w, q.y);
+	float e = 1.0e-10;
+	vec3 hsv = vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+	hsv.x += hue_offset / 360.0;
+	hsv.y += sat_offset;
+	hsv.z += val_offset;
+	return hsv;
+}

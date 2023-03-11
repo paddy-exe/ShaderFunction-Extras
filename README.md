@@ -60,6 +60,7 @@ All these shader functions are based on publicly available shader functions (ope
   * `greyscale`
   * `hsv_to_rgb`
   * `rgb_to_hsv`
+  * `hsv_adjustment`
 
   ### Noise
   * `psrdnoise3_with_gradient`
