@@ -17,12 +17,24 @@ jobs:
         run: |
           mv LICENSE.md README.md ${{ github.workspace }}/addons/ShaderFunction-Extras
 
+      - name: Directory info
+        shell: bash
+        run: |
+          pwd
+          ls -R
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}
           path: |
             ${{ github.workspace }}/addons/ShaderFunction-Extras/*
+
+      - name: Directory info
+        shell: bash
+        run: |
+          pwd
+          ls -R
 
       - uses: actions/download-artifact@v3
         with:
