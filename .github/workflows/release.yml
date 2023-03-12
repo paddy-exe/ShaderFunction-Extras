@@ -34,14 +34,21 @@ jobs:
         shell: bash
         run: |
           pwd
-          ls -R
+          ls
 
-      - uses: actions/download-artifact@v3
+      - name: Zip the folder
+        uses: vimtor/action-zip@v1.1
         with:
-          name: ${{ github.event.repository.name }}
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+          files: addons/ShaderFunction-Extras/
+          dest: ShaderFunction-Extras.zip
 
-      - name: Create and upload asset
+      - name: Directory info
+        shell: bash
+        run: |
+          pwd
+          ls
+
+      - name: Upload zip to release
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
