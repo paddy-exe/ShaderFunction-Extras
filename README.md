@@ -20,6 +20,10 @@ This project aims to help Godot developers writing custom written shaders by pro
 Download the source (releases and AssetLib version are still WIP) and put the `ShaderFunction-Extras` inside
 your `addons` folder. If you don't have one, create it or put the whole addons folder inside your project directory.
 
+After that, you can include the include files you need in your shader like this:
+![gdshaderinc-use-showcase](https://user-images.githubusercontent.com/38077837/224516902-06e97d30-e889-4544-b8ce-3b9f2be4144c.gif)
+
+
 ## 🔢 Versioning
 This repository is only meant for projects created with Godot 4.0 and upwards. However, if you are using Godot 3.x and want to
 use specific functions, you can copy and paste it inside your shader code still.
