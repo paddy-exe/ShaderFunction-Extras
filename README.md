@@ -76,10 +76,16 @@ All these shader functions are based on publicly available shader functions (ope
   * `linear_scene_depth_*`
   * `distance_fade`
   * `proximity_fade_*`
+  * `world_position_from_depth_*`
+  * `screen_normal_world_space`
+  * `rotation_matrix_by_axis`
+  * `rotate_by_axis`
   * `random_range`
   * `remap`
   * `fresnel`
   * `fresnel_glow`
+  * `smooth_clamp`
+  * `soft_clamp`
 
   ### UV
   * `uv_panning`
