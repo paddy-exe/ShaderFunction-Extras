@@ -73,9 +73,12 @@ All these shader functions are based on publicly available shader functions (ope
   * `psrdnoise2`
 
   ### Utility
+  * `depth_camera_*`
+  * `depth_vertex_*`
   * `linear_scene_depth_*`
   * `distance_fade`
-  * `proximity_fade_*`
+  * `proximity_camera_fade_*`
+  * `proximity_vertex_fade_*`
   * `world_position_from_depth_*`
   * `screen_normal_world_space`
   * `rotation_matrix_by_axis`
@@ -86,6 +89,7 @@ All these shader functions are based on publicly available shader functions (ope
   * `fresnel_glow`
   * `smooth_clamp`
   * `soft_clamp`
+  * `saturate`
 
   ### UV
   * `uv_panning`

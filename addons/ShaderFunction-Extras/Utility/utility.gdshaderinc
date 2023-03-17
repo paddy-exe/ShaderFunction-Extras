@@ -1,55 +1,72 @@
-vec4 depth_world_pos_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
-	float log_depth = texture(depth_tex, screen_uv).x;
-	return inv_proj_mat * vec4(vec3(screen_uv, log_depth) * 2.0 - 1.0, 1.0);
+vec4 depth_camera_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
+	vec4 depth = texture(depth_tex, screen_uv);
+	return inv_proj_mat * vec4(screen_uv * 2.0 - 1.0, depth.x, 1.0);
 }
 
-vec4 depth_world_pos_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
-	float log_depth = texture(depth_tex, screen_uv).x;
-	return inv_proj_mat * vec4(screen_uv * 2.0 - 1.0, log_depth, 1.0);
+vec4 depth_camera_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
+	vec4 depth = texture(depth_tex, screen_uv);
+	return inv_proj_mat * vec4(vec3(screen_uv, depth.x) * 2.0 - 1.0, 1.0);
+}
+
+vec4 depth_vertex_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
+	vec4 depth_world_pos = depth_camera_vulkan(depth_tex, screen_uv, inv_proj_mat);
+	depth_world_pos.xyz /= depth_world_pos.w;
+	return depth_world_pos;
+}
+
+vec4 depth_vertex_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
+	vec4 depth_world_pos = depth_camera_gles(depth_tex, screen_uv, inv_proj_mat);
+	depth_world_pos.xyz /= depth_world_pos.w;
+	return depth_world_pos;
 }
 
 float linear_scene_depth_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
-	vec4 depth_world_pos = depth_world_pos_vulkan(depth_tex, screen_uv, inv_proj_mat);
-	depth_world_pos.xyz /= depth_world_pos.w;
+	vec4 depth_world_pos = depth_vertex_vulkan(depth_tex, screen_uv, inv_proj_mat);
 	return -depth_world_pos.z;
 }
 
 float linear_scene_depth_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat) {
-	vec4 depth_world_pos = depth_world_pos_gles(depth_tex, screen_uv, inv_proj_mat);
-	depth_world_pos.xyz /= depth_world_pos.w;
+	vec4 depth_world_pos = depth_vertex_gles(depth_tex, screen_uv, inv_proj_mat);
 	return -depth_world_pos.z;
 }
 
 float distance_fade(float min_dist, float max_dist, vec3 vertex) {
-	return clamp(smoothstep(min_dist, max_dist,-vertex.z),0.0,1.0);
+	return clamp(smoothstep(min_dist, max_dist, -vertex.z), 0.0, 1.0);
 }
 
-float proximity_fade_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, vec3 vertex, float fade_dist) {
-	vec4 depth_world_pos = depth_world_pos_vulkan(depth_tex, screen_uv, inv_proj_mat);
+float proximity_camera_fade_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, vec3 vertex, float fade_dist) {
+	vec4 depth_world_pos = depth_camera_vulkan(depth_tex, screen_uv, inv_proj_mat);
 	return clamp(1.0 - smoothstep(depth_world_pos.z + fade_dist, depth_world_pos.z, vertex.z), 0.0, 1.0);
 }
 
-float proximity_fade_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, vec3 vertex, float fade_dist) {
-	vec4 depth_world_pos = depth_world_pos_gles(depth_tex, screen_uv, inv_proj_mat);
+float proximity_camera_fade_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, vec3 vertex, float fade_dist) {
+	vec4 depth_world_pos = depth_camera_gles(depth_tex, screen_uv, inv_proj_mat);
+	return clamp(1.0 - smoothstep(depth_world_pos.z + fade_dist, depth_world_pos.z, vertex.z), 0.0, 1.0);
+}
+
+float proximity_vertex_fade_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, vec3 vertex, float fade_dist) {
+	vec4 depth_world_pos = depth_vertex_vulkan(depth_tex, screen_uv, inv_proj_mat);
+	return clamp(1.0 - smoothstep(depth_world_pos.z + fade_dist, depth_world_pos.z, vertex.z), 0.0, 1.0);
+}
+
+float proximity_vertex_fade_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, vec3 vertex, float fade_dist) {
+	vec4 depth_world_pos = depth_vertex_gles(depth_tex, screen_uv, inv_proj_mat);
 	return clamp(1.0 - smoothstep(depth_world_pos.z + fade_dist, depth_world_pos.z, vertex.z), 0.0, 1.0);
 }
 
 vec3 world_position_from_depth_vulkan(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, mat4 inv_view_mat) {
-	vec4 depth_world_pos = depth_world_pos_vulkan(depth_tex, screen_uv, inv_proj_mat);
-	depth_world_pos.xyz /= depth_world_pos.w;
+	vec4 depth_world_pos = depth_vertex_vulkan(depth_tex, screen_uv, inv_proj_mat);
 	return (inv_view_mat * depth_world_pos).xyz;
 }
 
 vec3 world_position_from_depth_gles(sampler2D depth_tex, vec2 screen_uv, mat4 inv_proj_mat, mat4 inv_view_mat) {
-	vec4 depth_world_pos = depth_world_pos_gles(depth_tex, screen_uv, inv_proj_mat);
-	depth_world_pos.xyz /= depth_world_pos.w;
+	vec4 depth_world_pos = depth_vertex_gles(depth_tex, screen_uv, inv_proj_mat);
 	return (inv_view_mat * depth_world_pos).xyz;
 }
 
 vec3 screen_normal_world_space(sampler2D normal_rough_tex, vec2 screen_uv, mat4 inv_view_mat) {
 	vec3 normals = texture(normal_rough_tex, screen_uv).xyz;
-	normals = normals * 2.0 - 1.0;
-	return mat3(inv_view_mat) * normals;
+	return mat3(inv_view_mat) * (normals * 2.0 - 1.0);
 }
 
 mat4 rotation_matrix_by_axis(float angle, vec3 axis) {
@@ -108,4 +125,8 @@ float smooth_clamp(float value, float min, float max) {
 
 float soft_clamp(float value, float min, float max) {
 	return smoothstep(0.0, 1.0, (2.0 / 3.0) * (value - min) / (max - min) + (1.0 / 6.0)) * (max - min) + min;
+}
+
+float saturate(float value, float scale) {
+	return clamp(((value - 0.5) * scale) + 0.5, 0.0, 1.0);
 }
