@@ -96,7 +96,7 @@ vec3 rotate_by_axis(vec3 input, float angle, vec3 axis) {
 }
 
 // 3D Noise with friendly permission by Inigo Quilez\n";
-vec3 hash_noise_range( vec3 p ) {
+vec3 hash_noise_range(vec3 p) {
 	p *= mat3(vec3(127.1, 311.7, -53.7), vec3(269.5, 183.3, 77.1), vec3(-301.7, 27.3, 215.3));
 	return 2.0 * fract(fract(p)*4375.55) -1.;
 }
@@ -129,4 +129,11 @@ float soft_clamp(float value, float min, float max) {
 
 float saturate(float value, float scale) {
 	return clamp(((value - 0.5) * scale) + 0.5, 0.0, 1.0);
+}
+
+vec3 vertex_billboard(vec2 uv, mat4 view_mat, vec3 vertex, float scale) {
+	uv.x = remap(uv.x, 0.0, 1.0, -1.0, 1.0);
+	uv.y = remap(uv.y, 0.0, 1.0, -1.0, 1.0);
+	uv *= scale;
+	return vert + ((vec4(uv, 0.0, 0.0) * view_mat)).xyz;
 }
