@@ -90,6 +90,7 @@ All these shader functions are based on publicly available shader functions (ope
   * `smooth_clamp`
   * `soft_clamp`
   * `saturate`
+  * `vertex_billboard`
 
   ### UV
   * `uv_panning`
