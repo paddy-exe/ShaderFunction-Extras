@@ -137,3 +137,19 @@ vec3 vertex_billboard(vec2 uv, mat4 view_mat, vec3 vertex, float scale) {
 	uv *= scale;
 	return vert + ((vec4(uv, 0.0, 0.0) * view_mat)).xyz;
 }
+
+float camera_z_near_plane_vulkan(mat4 proj_mat) {
+	return abs(proj_mat[3][2] / proj_mat[2][2]);
+}
+
+float camera_z_near_plane_gles(mat4 proj_mat) {
+	return proj_mat[3][2] / (proj_mat[2][2] - 1.0);
+}
+
+float camera_z_far_plane_vulkan(mat4 proj_mat) {
+	return abs((proj_mat[3][2] * camera_z_near_plane(mat4 proj_mat)) / (proj_mat[3][2] + camera_z_near_plane(mat4 proj_mat)));
+}
+
+float camera_z_far_plane_gles(mat4 proj_mat) {
+	return proj_mat[3][2] / (proj_mat[2][2] + 1.0);
+}
