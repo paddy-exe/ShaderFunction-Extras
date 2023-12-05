@@ -135,5 +135,5 @@ vec3 vertex_billboard(vec2 uv, mat4 view_mat, vec3 vertex, float scale) {
 	uv.x = remap(uv.x, 0.0, 1.0, -1.0, 1.0);
 	uv.y = remap(uv.y, 0.0, 1.0, -1.0, 1.0);
 	uv *= scale;
-	return vert + ((vec4(uv, 0.0, 0.0) * view_mat)).xyz;
+	return vertex + ((vec4(uv, 0.0, 0.0) * view_mat)).xyz;
 }
