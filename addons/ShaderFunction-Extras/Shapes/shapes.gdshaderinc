@@ -7,7 +7,7 @@ float polygon(vec2 uv, float width, int sides) {
 }
 
 float circle(vec2 uv, float radius, float feather) {
-	return smoothstep(radius, radius + feather, dot(position, position) * 4.0);
+	return smoothstep(radius, radius + feather, dot(uv, uv) * 4.0);
 }
 
 float square(vec2 uv, float width) {
