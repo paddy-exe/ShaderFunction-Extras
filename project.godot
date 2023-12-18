@@ -11,5 +11,5 @@ config_version=5
 [application]
 
 config/name="ShaderFunction-Extras"
-config/features=PackedStringArray("4.0", "Forward Plus")
+config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://addons/ShaderFunction-Extras/ShaderFunction-Logo.svg"
